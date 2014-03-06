@@ -1,0 +1,9 @@
+/public/assets
+/public/uploads
+/public/assets
+/public/system
+/config/database.yml
+
+/log/*.log
+/tmp
+/.bundle

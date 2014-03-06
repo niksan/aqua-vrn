@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: aqua-vrn_development
+  pool: 5
+  username: postgres
+  password: 860827
+  host: localhost
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: aqua-vrn_test
+  pool: 5
+  username: postgres
+  password: 860827
+  host: localhost
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: aqua-vrn_development
+  pool: 5
+  username: postgres
+  password: 860827
+  host: localhost
