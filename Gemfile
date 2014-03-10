@@ -17,7 +17,7 @@ gem 'haml-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'gritter', '1.0.3'
-gem 'compass-rails', github: "Compass/compass-rails"
+gem 'compass-rails'
 gem 'bootstrap-sass', '~> 2.3.2.0'
 gem 'friendly_id', github: 'norman/friendly_id'
 gem 'russian'
