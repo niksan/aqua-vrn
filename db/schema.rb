@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310174540) do
+ActiveRecord::Schema.define(version: 20140311101304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,9 +34,56 @@ ActiveRecord::Schema.define(version: 20140310174540) do
     t.text     "body"
     t.string   "key"
     t.string   "ancestry"
+    t.integer  "position"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "pages", ["ancestry"], name: "index_pages_on_ancestry", using: :btree
+  add_index "pages", ["key"], name: "index_pages_on_key", using: :btree
+  add_index "pages", ["position"], name: "index_pages_on_position", using: :btree
+  add_index "pages", ["slug"], name: "index_pages_on_slug", using: :btree
+
+  create_table "photogalleries", force: true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.integer  "position"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "photogalleries", ["ancestry"], name: "index_photogalleries_on_ancestry", using: :btree
+  add_index "photogalleries", ["position"], name: "index_photogalleries_on_position", using: :btree
+  add_index "photogalleries", ["slug"], name: "index_photogalleries_on_slug", using: :btree
+
+  create_table "photos", force: true do |t|
+    t.integer  "photogallery_id"
+    t.string   "image"
+    t.string   "name"
+    t.string   "ancestry"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "photos", ["ancestry"], name: "index_photos_on_ancestry", using: :btree
+  add_index "photos", ["position"], name: "index_photos_on_position", using: :btree
+
+  create_table "services", force: true do |t|
+    t.string   "name"
+    t.string   "image"
+    t.text     "description"
+    t.string   "ancestry"
+    t.integer  "position"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "services", ["ancestry"], name: "index_services_on_ancestry", using: :btree
+  add_index "services", ["position"], name: "index_services_on_position", using: :btree
+  add_index "services", ["slug"], name: "index_services_on_slug", using: :btree
 
 end
