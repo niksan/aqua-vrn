@@ -4,5 +4,6 @@ class Service < ActiveRecord::Base
   has_ancestry
   extend FriendlyId
   friendly_id :name, use: [:history, :finders]
+  mount_uploader :image, ServiceUploader
 
 end

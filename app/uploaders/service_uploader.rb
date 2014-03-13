@@ -1,4 +1,4 @@
-class PhotoUploader < CarrierWave::Uploader::Base
+class ServiceUploader < CarrierWave::Uploader::Base
 
   include UploadImage
 

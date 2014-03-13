@@ -35,11 +35,18 @@ ru:
       page:
         title: 'заголовок'
         body: 'контент'
+        key: 'ключ'
+        created_at: 'создано'
+        updated_at: 'обновлено'
+      photo:
+        name: 'название'
+        photogallery: 'фотогалерея'
+        image: 'изображение'
         created_at: 'создано'
         updated_at: 'обновлено'
       photogallery:
         name: 'название'
-        image: 'изображение'
+        photos: 'фотографии'
         created_at: 'создано'
         updated_at: 'обновлено'
       user:
