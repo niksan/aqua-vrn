@@ -1,0 +1,58 @@
+ru:
+  activerecord:
+    models:
+      page: 
+        one: 'страница'
+        few: 'страницы'
+        many: 'страницы'
+        other: 'страницы'
+      photo: 
+        one: 'фото'
+        few: 'фото'
+        many: 'фото'
+        other: 'фото'
+      role: 
+        one: 'роль'
+        few: 'роли'
+        many: 'роли'
+        other: 'роли'
+      photogallery: 
+        one: 'галерея'
+        few: 'галереи'
+        many: 'галереи'
+        other: 'галереи'
+      user: 
+        one: 'пользователь'
+        few: 'пользователи'
+        many: 'пользователи'
+        other: 'пользователи'
+      service:
+        one: 'услуга'
+        few: 'услуги'
+        many: 'услуги'
+        other: 'услуги'
+    attributes:
+      page:
+        title: 'заголовок'
+        body: 'контент'
+        created_at: 'создано'
+        updated_at: 'обновлено'
+      photogallery:
+        name: 'название'
+        image: 'изображение'
+        created_at: 'создано'
+        updated_at: 'обновлено'
+      user:
+        email: 'e-mail'
+        password: 'пароль'
+        last_sign_in_at: 'крайняя авторизация'
+        sign_in_count: 'количество авторизаций'
+        current_password: 'текущий пароль'
+        password_confirmation: 'подтверждение пароля'
+        created_at: 'создано'
+        updated_at: 'обновлено'
+        roles: 'роли'
+      service:
+        name: 'название'
+        image: 'изображение'
+        description: 'описание'
