@@ -5,5 +5,10 @@ class Page < ActiveRecord::Base
   has_ancestry
   extend FriendlyId
   friendly_id :title, use: [:history, :finders]
+  validate :key, uniqueness: true
+
+  def self.by_key(key)
+    where(key: key.to_s).first
+  end
   
 end

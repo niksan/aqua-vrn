@@ -9,10 +9,9 @@
       = link_to 'AQUA-VRN', root_path, class: "navbar-brand"
     .collapse.navbar-collapse.navbar-ex1-collapse{ role: "navigation" }
       %ul.nav.navbar-nav.navbar-right
-        %li.active
-          = link_to 'главная', '#'
-        %li
-          = link_to 'о компании', '#'
+        %li{ class: (controller_name == 'main') ? 'active' : 'unactive' }
+          = link_to 'главная', root_path
+        %li{ class: page_state_class(:about) }= link_to 'о компании', ((p = Page.by_key(:about)) ? page_path(p) : root_path)
         %li.dropdown
           %a{ href: "#", class: "dropdown-toggle", :'data-toggle' => "dropdown" }
             услуги
@@ -27,5 +26,7 @@
             %li= link_to 'Бетонные работы', '#'
             %li= link_to 'Обслуживание, запуск, консервация автоматического полива', '#'
             %li= link_to 'Оборудование для водоемов и фонтанов', '#'
-        %li= link_to 'фотогалерея', '#'
-        %li= link_to 'контакты', '#'
+        %li{ class: controller_state_class(:photogallery) }
+          = link_to 'фотогалерея', photogallery_index_path
+        %li{ class: controller_state_class(:contacts) }
+          = link_to 'контакты', contacts_path
