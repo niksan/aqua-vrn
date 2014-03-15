@@ -1,1 +1,24 @@
-%h1 Фотогалерея
+#portfolio
+  .container
+    .section_header
+      %h3 Фотогалерея
+    .row
+      .col-md-12
+        #filters_container
+          %ul#filters
+            %li= link_to 'Все', '#', :'data-filter' => '*', class: 'active'
+            %li.separator /
+            - @photogalleries.try(:each) do |gallery| 
+              %li= link_to gallery.name, '#', :'data-filter' => ".#{gallery.slug}"
+              - unless @photogalleries.last == gallery
+                %li.separator /
+    .row
+      .col-md-12
+        #gallery_container
+          - @photos.try(:each) do |photo|
+            %div{ class: ('photo ' + photo.photogallery.slug) }
+              = image_tag photo.image.small, class: 'img-responsive'
+              = link_to photo.image.medium.url, class: 'mask fancybox' do
+                %h3= photo.name
+                %small= photo.photogallery.name
+                .more +

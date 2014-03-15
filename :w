@@ -42,4 +42,4 @@
               %span.contacticos.ico2
               %span.text info@aqua-vrn.ru
           
-    = render 'share/map'
+  = render 'share/map'

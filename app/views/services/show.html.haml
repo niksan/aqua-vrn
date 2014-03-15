@@ -4,5 +4,5 @@
   = @service.name
 .clearfix
 = link_to @service.image.medium.url, class: 'fancybox' do
-  = image_tag @service.image, id: 'service_img'
+  = image_tag @service.image.small, id: 'service_img'
 != @service.description

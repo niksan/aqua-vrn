@@ -7,6 +7,8 @@ class Service < ActiveRecord::Base
   mount_uploader :image, ServiceUploader
   before_create :set_position
 
+  default_scope -> { order(:position) }
+
   protected
 
     def set_position
