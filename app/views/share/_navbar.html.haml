@@ -1,4 +1,6 @@
-.navbar.navbar-inverse.navbar-fixed-top{ role: "navigation" }
+- navbar_classes = %w(navbar navbar-inverse)
+- navbar_classes << ((controller_name == 'main') ? 'navbar-fixed-top' : 'navbar-static-top')
+%div{ role: "navigation", class: navbar_classes.join(' ')}
   .container
     .navbar-header
       %button.navbar-toggle.pull-right{ type: "button", :'data-toggle' => "collapse", :'data-target' => ".navbar-ex1-collapse" }
@@ -17,15 +19,8 @@
             услуги
             %b.caret
           %ul.dropdown-menu
-            %li= link_to 'Продажа оборудования и монтаж систем автополива', '#'
-            %li= link_to 'Строительство декоративных водоемов и горок', '#'
-            %li= link_to 'Стрижка газона', '#'
-            %li= link_to 'Установка фонтанного оборудования', '#'
-            %li= link_to 'Все виды работ по декоративному камню', '#'
-            %li= link_to 'Обслуживание, ремонт, демонтаж старых водоемов', '#'
-            %li= link_to 'Бетонные работы', '#'
-            %li= link_to 'Обслуживание, запуск, консервация автоматического полива', '#'
-            %li= link_to 'Оборудование для водоемов и фонтанов', '#'
+            - @services.each do |service|
+              %li= link_to service.name, service_path(service)
         %li{ class: controller_state_class(:photogallery) }
           = link_to 'фотогалерея', photogallery_index_path
         %li{ class: controller_state_class(:contacts) }

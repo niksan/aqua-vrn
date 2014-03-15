@@ -3,4 +3,8 @@
 //= require bootstrap.min
 //= require theme
 //= require index-slider
+//= require fancybox
 //= require_tree .
+
+jQuery ->
+  $('a.fancybox').fancybox()

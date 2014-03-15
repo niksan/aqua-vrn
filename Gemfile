@@ -21,6 +21,7 @@ gem 'compass-rails'
 gem 'bootstrap-sass', '~> 2.3.2.0'
 gem 'friendly_id', github: 'norman/friendly_id'
 gem 'russian'
+gem 'fancybox2-rails'
 
 group :development do
   gem 'better_errors'

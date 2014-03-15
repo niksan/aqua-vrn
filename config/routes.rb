@@ -1,5 +1,4 @@
 AquaVrn::Application.routes.draw do
-  get "pages/show"
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   devise_for :users
@@ -8,5 +7,6 @@ AquaVrn::Application.routes.draw do
   resources :pages, only: :show
   resources :photogallery, only: :index
   resources :contacts, only: :index
+  resources :services, only: [:index, :show]
 
 end
