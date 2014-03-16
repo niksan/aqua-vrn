@@ -2,7 +2,6 @@
 //= require jquery_ujs
 //= require bootstrap.min
 //= require theme
-//= require index-slider
 //= require fancybox
 //= require_tree .
 
