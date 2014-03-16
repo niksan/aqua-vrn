@@ -3,7 +3,6 @@
 //= require bootstrap.min
 //= require theme
 //= require fancybox
-//= require_tree .
 
 jQuery ->
   $('a.fancybox').fancybox()
