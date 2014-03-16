@@ -12,7 +12,7 @@ set :format,               :pretty
 set :log_level,            :info
 set :pty,                  true
 set :linked_files,         %w{config/database.yml}
-set :linked_dirs,          %w{bin log vendor/bundle public/system public/uploads}
+set :linked_dirs,          %w{bin log vendor/bundle public/system public/uploads public/assets}
 set :keep_releases,        10
 set :unicorn_start_cmd,    "(cd #{fetch(:deploy_to)}/current; rvm use #{fetch(:rvm_ruby_string)} do bundle exec unicorn_rails -Dc #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)})"
 set :unicorn_stop_cmd,     "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -QUIT `cat #{fetch(:unicorn_pid)}`; fi"
