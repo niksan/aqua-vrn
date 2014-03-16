@@ -9,6 +9,7 @@ RailsAdmin.config do |config|
     nestable
   end
 
+  config.authorize_with :cancan
   config.main_app_name = ['Aqua-Vrn', 'Admin']
   config.current_user_method { current_user } # auto-generated
 
