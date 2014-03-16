@@ -29,7 +29,10 @@ group :development do
   gem 'meta_request'
   gem 'letter_opener'
   gem 'thin'
-  gem 'capistrano', require: false
+  gem 'capistrano'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
 end
 
 group :production do
