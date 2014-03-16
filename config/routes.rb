@@ -8,5 +8,6 @@ AquaVrn::Application.routes.draw do
   resources :photogallery, only: :index
   resources :contacts, only: :index
   resources :services, only: [:index, :show]
+  resources :messages, only: :create
 
 end
