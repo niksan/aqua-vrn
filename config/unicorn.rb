@@ -1,5 +1,5 @@
-application = 'fe-vrn'
-domain = 'fe-vrn.ru'
+application = 'aqua-vrn'
+domain = 'aqua-vrn.ru'
 # Sample verbose configuration file for Unicorn (not Rack)
 #
 # This configuration file documents many features of Unicorn
