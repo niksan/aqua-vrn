@@ -47,7 +47,7 @@ RailsAdmin.config do |config|
 
   config.model 'Page' do
     configure :title, :string 
-    configure :body, :text 
+    configure :body, :ck_editor
     configure :key, :string 
     list do
       field :title
