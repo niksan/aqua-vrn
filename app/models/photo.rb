@@ -5,5 +5,6 @@ class Photo < ActiveRecord::Base
   belongs_to :photogallery
   has_ancestry
   mount_uploader :image, PhotoUploader
+  include SetPosition
 
 end
