@@ -6,7 +6,7 @@ class Photogallery < ActiveRecord::Base
   has_ancestry
   extend FriendlyId
   friendly_id :name, use: [:history, :finders]
-
   accepts_nested_attributes_for :photos, allow_destroy: true
+  include SetPosition
 
 end

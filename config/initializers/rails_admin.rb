@@ -1,4 +1,5 @@
 RailsAdmin.config do |config|
+  config.authorize_with :cancan
 
   config.actions do
     dashboard
@@ -9,7 +10,6 @@ RailsAdmin.config do |config|
     nestable
   end
 
-  config.authorize_with :cancan
   config.main_app_name = ['Aqua-Vrn', 'Admin']
   config.current_user_method { current_user } # auto-generated
 
@@ -20,6 +20,7 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Photogallery' do
+    nestable_list true
     configure :name, :string
     list do
       field :name
@@ -30,6 +31,7 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Photo' do
+    nestable_list true
     configure :photogallery, :belongs_to_association
     configure :name, :string
     configure :image, :carrierwave
@@ -61,6 +63,7 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Service' do
+    nestable_list true
     configure :name, :string 
     configure :image, :carrierwave
     configure :description, :text 
