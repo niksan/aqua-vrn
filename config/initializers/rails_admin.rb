@@ -4,8 +4,12 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard
     index
-    new
-    edit
+    new do
+      except ['Message']
+    end
+    edit do
+      except ['Message']
+    end
     delete
     nestable
   end
@@ -27,6 +31,34 @@ RailsAdmin.config do |config|
     end
     edit do
       field :name
+    end
+  end
+
+  config.model 'Message' do
+    configure :name, :string do
+      read_only true
+    end
+    configure :email, :string do
+      read_only true
+    end
+    configure :phone, :string do
+      read_only true
+    end
+    configure :body, :text do
+      read_only true
+    end
+    list do
+      field :name
+      field :email
+      field :phone
+      field :body
+      field :created_at
+    end
+    edit do
+      field :name
+      field :email
+      field :phone
+      field :body
     end
   end
 

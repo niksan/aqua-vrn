@@ -1,6 +1,11 @@
 ru:
   activerecord:
     models:
+      message: 
+        one: 'сообщение'
+        few: 'cообщения'
+        many: 'сообщения'
+        other: 'сообщения'
       page: 
         one: 'страница'
         few: 'страницы'
@@ -32,6 +37,11 @@ ru:
         many: 'услуги'
         other: 'услуги'
     attributes:
+      message:
+        name: Имя
+        phone: Телефон
+        body: Содержание
+        created_at: 'Cоздано'
       page:
         title: 'заголовок'
         body: 'контент'
