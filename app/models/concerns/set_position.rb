@@ -4,7 +4,11 @@ module SetPosition
   module ClassMethods
 
     def generate_positions
-      self.where('position IS NULL').each{ |i| i.update_attributes(position: i.new_position) }
+      self.where('position IS NULL').each{ |i| i.update_attributes(position: self.next_position) }
+    end
+
+    def next_position
+      unscoped.where('position IS NOT NULL').order(:position).try(:last).try(:position).to_i + 1
     end
 
   end
@@ -15,11 +19,7 @@ module SetPosition
   end
 
   def set_position
-    self.position = self.new_position
-  end
-
-  def new_position
-    self.class.unscoped.order(:position).try(:first).try(:position).to_i + 1
+    self.position = self.next_position
   end
 
 end
