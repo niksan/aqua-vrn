@@ -1,48 +1,58 @@
-set :application,          'aqua-vrn'
-set :repo_url,             'git://github.com/niksan/aqua-vrn.git'
-set :scm,                  :git
-set :rails_env,            'production'
-set :rvm_ruby_string,      '2.1.1@rails4'
-set :deploy_to,            "/srv/htdocs/#{fetch(:application)}"
-set :unicorn_conf,         "#{fetch(:deploy_to)}/current/config/unicorn.rb"
-set :unicorn_pid,          "#{fetch(:deploy_to)}/shared/pids/unicorn.pid"
-set :bundle_cmd,           "cd #{fetch(:deploy_to)}/current; rvm use #{fetch(:rvm_ruby_string)} do bundle exec install"
-set :migrate_cmd,          "cd #{fetch(:deploy_to)}/current; RAILS_ENV=#{fetch(:rails_env)} rvm use #{fetch(:rvm_ruby_string)} do bundle exec install"
-set :format,               :pretty
-set :log_level,            :info
-set :pty,                  true
+require 'bundler/capistrano'
 set :linked_files,         %w{config/database.yml}
-set :linked_dirs,          %w{bin log vendor/bundle public/system public/uploads public/assets}
-set :keep_releases,        10
-set :unicorn_start_cmd,    "(cd #{fetch(:deploy_to)}/current; rvm use #{fetch(:rvm_ruby_string)} do bundle exec unicorn_rails -Dc #{fetch(:unicorn_conf)} -E #{fetch(:rails_env)})"
-set :unicorn_stop_cmd,     "if [ -f #{fetch(:unicorn_pid)} ] && [ -e /proc/$(cat #{fetch(:unicorn_pid)}) ]; then kill -QUIT `cat #{fetch(:unicorn_pid)}`; fi"
+set :linked_dirs,          %w{bin log vendor/bundle public/system public/uploads public/ckeditor_assets}
 
+#after "deploy:update_code", :copy_database_config
+#task :copy_database_config, roles => :app do
+#  db_config = "#{shared_path}/database.yml"
+#  run "cp #{db_config} #{release_path}/config/database.yml"
+#end
+
+load 'deploy/assets'
+
+ssh_options[:forward_agent] = true
+set :application,     "aqua-vrn"
+set :deploy_server,   "hydrogen.locum.ru"
+set :bundle_without,  [:development, :test]
+set :user,            "hosting_niksan"
+set :login,           "niksan"
+set :use_sudo,        false
+set :deploy_to,       "/home/#{user}/projects/#{application}"
+set :unicorn_conf,    "/etc/unicorn/#{application}.#{login}.rb"
+set :unicorn_pid,     "/var/run/unicorn/#{user}/#{application}.#{login}.pid"
+set :bundle_dir,      File.join(fetch(:shared_path), 'gems')
+role :web,            deploy_server
+role :app,            deploy_server
+role :db,             deploy_server, :primary => true
+
+set :rvm_ruby_string, "2.2.0"
+set :rake,            "rvm use #{rvm_ruby_string} do bundle exec rake" 
+set :bundle_cmd,      "rvm use #{rvm_ruby_string} do bundle"
+set :scm,             :git
+set :repository,      "git@github.com:niksan/aqua-vrn.git"
+
+before 'deploy:finalize_update', 'set_current_release'
+task :set_current_release, :roles => :app do
+    set :current_release, latest_release
+end
+
+  set :unicorn_start_cmd, "(cd #{deploy_to}/current; rvm use #{rvm_ruby_string} do bundle exec unicorn_rails -Dc #{unicorn_conf})"
+
+
+# - for unicorn - #
 namespace :deploy do
-
-  desc 'Start application'
-  task :start do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute fetch(:unicorn_start_cmd)
-    end
+  desc "Start application"
+  task :start, :roles => :app do
+    run unicorn_start_cmd
   end
 
-  desc 'Stop application'
-  task :stop do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute fetch(:unicorn_stop_cmd)
-    end
+  desc "Stop application"
+  task :stop, :roles => :app do
+    run "[ -f #{unicorn_pid} ] && kill -QUIT `cat #{unicorn_pid}`"
   end
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute fetch(:unicorn_bundle_cmd)
-      execute fetch(:unicorn_migrate_cmd)
-      execute fetch(:unicorn_stop_cmd)
-      execute fetch(:unicorn_start_cmd)
-    end
+  desc "Restart Application"
+  task :restart, :roles => :app do
+    run "[ -f #{unicorn_pid} ] && kill -USR2 `cat #{unicorn_pid}` || #{unicorn_start_cmd}"
   end
-
-  after :finishing, 'deploy:cleanup'
-
 end

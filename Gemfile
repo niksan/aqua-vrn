@@ -30,10 +30,7 @@ group :development do
   gem 'meta_request'
   gem 'letter_opener'
   gem 'thin'
-  gem 'capistrano'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
+  gem "capistrano", '~> 2.15.5'
 end
 
 group :production do
