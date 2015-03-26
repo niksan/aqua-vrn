@@ -1,4 +1,5 @@
-ssh_options[:forward_agent] = true
+require 'bundler/capistrano'
+
 set :application,     "aqua-vrn"
 set :deploy_server,   "hydrogen.locum.ru"
 set :bundle_without,  [:development, :test]
@@ -19,12 +20,12 @@ role :web,            deploy_server
 role :app,            deploy_server
 role :db,             deploy_server, :primary => true
 
-require 'bundler/capistrano'
+ssh_options[:forward_agent] = true
 
-after "deploy:update_code", :link_files
+before "deploy:assets:precompile", :link_files
 
 task :link_files, roles => :app do
-  %W(config/database.yml public/uploads public/assets public/ckeditor_assets).each do |linked_file|
+  %W(config/database.yml public/uploads public/assets).each do |linked_file|
     filepath = "#{ shared_path }/#{ linked_file }"
     run "ln -s #{ filepath } #{ release_path }/#{ linked_file }"
   end
