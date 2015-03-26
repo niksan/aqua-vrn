@@ -1,15 +1,3 @@
-require 'bundler/capistrano'
-set :linked_files,         %w{config/database.yml}
-set :linked_dirs,          %w{bin log vendor/bundle public/system public/uploads public/ckeditor_assets}
-
-#after "deploy:update_code", :copy_database_config
-#task :copy_database_config, roles => :app do
-#  db_config = "#{shared_path}/database.yml"
-#  run "cp #{db_config} #{release_path}/config/database.yml"
-#end
-
-load 'deploy/assets'
-
 ssh_options[:forward_agent] = true
 set :application,     "aqua-vrn"
 set :deploy_server,   "hydrogen.locum.ru"
@@ -21,15 +9,28 @@ set :deploy_to,       "/home/#{user}/projects/#{application}"
 set :unicorn_conf,    "/etc/unicorn/#{application}.#{login}.rb"
 set :unicorn_pid,     "/var/run/unicorn/#{user}/#{application}.#{login}.pid"
 set :bundle_dir,      File.join(fetch(:shared_path), 'gems')
-role :web,            deploy_server
-role :app,            deploy_server
-role :db,             deploy_server, :primary => true
-
+set :linked_dirs,          %w{bin log vendor/bundle public/system public/uploads }
 set :rvm_ruby_string, "2.2.0"
 set :rake,            "rvm use #{rvm_ruby_string} do bundle exec rake" 
 set :bundle_cmd,      "rvm use #{rvm_ruby_string} do bundle"
 set :scm,             :git
 set :repository,      "git@github.com:niksan/aqua-vrn.git"
+role :web,            deploy_server
+role :app,            deploy_server
+role :db,             deploy_server, :primary => true
+
+require 'bundler/capistrano'
+
+after "deploy:update_code", :link_files
+
+task :link_files, roles => :app do
+  %W(config/database.yml public/uploads public/assets public/ckeditor_assets).each do |linked_file|
+    filepath = "#{ shared_path }/#{ linked_file }"
+    run "ln -s #{ filepath } #{ release_path }/#{ linked_file }"
+  end
+end
+
+load 'deploy/assets'
 
 before 'deploy:finalize_update', 'set_current_release'
 task :set_current_release, :roles => :app do
