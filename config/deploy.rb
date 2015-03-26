@@ -21,12 +21,12 @@ role :db,             deploy_server, :primary => true
 
 require 'bundler/capistrano'
 
-before "deploy:assets:precompile", :link_files
+after "deploy:update_code", :link_files
 
 task :link_files, roles => :app do
   %W(config/database.yml public/uploads).each do |linked_file|
     filepath = "#{ shared_path }/#{ linked_file }"
-    run "ln -s #{ filepath } #{ release_path }/#{ linked_file }"
+    run "ln -nfs #{ filepath } #{ release_path }/#{ linked_file }"
   end
 end
 
