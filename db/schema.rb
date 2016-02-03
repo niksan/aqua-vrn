@@ -59,10 +59,16 @@ ActiveRecord::Schema.define(version: 20140316175947) do
     t.text     "body"
     t.string   "key"
     t.string   "ancestry"
+    t.integer  "position"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "pages", ["ancestry"], name: "index_pages_on_ancestry", using: :btree
+  add_index "pages", ["key"], name: "index_pages_on_key", using: :btree
+  add_index "pages", ["position"], name: "index_pages_on_position", using: :btree
+  add_index "pages", ["slug"], name: "index_pages_on_slug", using: :btree
 
   create_table "photogalleries", force: true do |t|
     t.string   "name"
